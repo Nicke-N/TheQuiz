@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <title>Some questions</title>
+    </head>
+    <body>
+        <div id="topleft">
+            <p>Enter your name: 
+                <input type="text" id="name">
+            </p>
+            <p>Choose category: 
+                    <input type="radio" name="category" value="math"checked>
+                    <label>Math</label>
+            
+                    <input type="radio" name="category" value="general">
+                    <label>General</label>
+            </p>
+            <label for="questions">How many questions would you like to answer?</label>
+                <select  id="amountofquestions" name="amountOfQuestions">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">1</option>
+                <option value="6">2</option>
+                <option value="7">3</option>
+                <option value="8">4</option>  
+                </select>
+            <button id="add" onclick="addquestions()">Add questions</button>
+        </div>
+        
+        <div>
+            <button id="previous"value="0" onclick="previous()" disabled>Previous question</button>
+            <button id="next"value="0" onclick="next()" disabled>Next question</button>
+            <button id="submit" onclick="submit()">Submit answers</button>
+        </div>
+        <div id="thequestions">
+
+
+        </div>
+
+        
+        <script src="vgfunction.js"></script>
+    </body>
+</html>
