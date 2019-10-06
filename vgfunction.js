@@ -1,34 +1,29 @@
 document.addEventListener("click", whichevent)
+
+
 function whichevent(event) {
 
     var selections = [];
-    var checkboxElems = document.querySelectorAll("input[type='checkbox']");
+    var uniquearray= [];
+    var order = 0;
+    var questionsanswered = 0;
 
-    
-    for (var i = 0; i < checkboxElems.length; i++) {
-      checkboxElems[i].addEventListener("click", displayCheck);
-    }
-    
-    function displayCheck(e) {
-      if (e.target.checked) {
-        selections[e.target.id] = {
-          name: e.target.name,
-          value: e.target.value
-        };
-        for(let define = 0; define < selections.length;define++){
-            if (e.target.name == selected[define].name){
-                console.log(selections[define].name);
-                delete selections[define];
-            }
+    let testing = document.querySelectorAll("input[type='checkbox']");
+    let currently = document.getElementById("answeredamount");
+    let chosenamount = document.getElementById("amountofquestions").value;
+    for(let count = 0; count < testing.length;count++){
+        if (testing[count].checked) {
+        selections[order] = testing[count].name
+        order++;
         }
-      } 
-      else {
-        delete selections[e.target.id];
-      }
-      console.log(selections.name)
     }
+        if(event.target.value != null){
+        uniquearray = Array.from(new Set(selections));
+        questionsanswered = uniquearray.length;
+        currently.textContent = "You have answered " + uniquearray.length + " of " + chosenamount + " questions.";
+        }
+    
 }
-
 class question {
     constructor(category, specificquestion = [], someanswers1 = [],
         someanswers2 = [], correctanswers = [],
@@ -42,7 +37,7 @@ class question {
         this.alloptions = alloptions;
         this.useranswer = useranswer;
     }
-    static correction() {
+    correction() {
         let corrected = [];
         //this.correctanswers = correctanswers;
         for (let add = 0; add <= this.specificquestion.length + 1; add++) {
@@ -58,13 +53,13 @@ class question {
                 } else {
                     catchanswer += this.useranswer[eachquestion].charAt(eachanswer);
                 }
-                
+
                 if (catchanswer.includes('|')) {
 
                     catchanswer = catchanswer.substring(0, catchanswer.length - 1);
-                    
+
                     if (catchanswer == this.correctanswers[eachquestion] || (this.category == "general" &&
-                        catchanswer != "dunno" && catchanswer != null)) {
+                            catchanswer != "dunno" && catchanswer != null)) {
                         corrected[eachquestion] += 1;
                         corrected[this.specificquestion.length] += 1;
                         console.log(catchanswer + " is correct");
@@ -76,20 +71,20 @@ class question {
                     catchanswer = null;
                 }
 
-                
+
             }
             if (catchanswer == this.correctanswers[eachquestion] || (this.category == "general" &&
-                catchanswer != "dunno" && catchanswer != null)) {
-                    corrected[eachquestion] += 1;
-                    corrected[this.specificquestion.length] += 1;
-                    console.log(catchanswer + " is correct");
+                    catchanswer != "dunno" && catchanswer != null)) {
+                corrected[eachquestion] += 1;
+                corrected[this.specificquestion.length] += 1;
+                console.log(catchanswer + " is correct");
 
-                } else {
-                    corrected[eachquestion] -= 1;
-                    corrected[this.specificquestion.length + 1] += 1;
-                    console.log(catchanswer + " is wrong");
-                }
-                catchanswer = null;
+            } else {
+                corrected[eachquestion] -= 1;
+                corrected[this.specificquestion.length + 1] += 1;
+                console.log(catchanswer + " is wrong");
+            }
+            catchanswer = null;
         }
 
         return corrected;
@@ -98,37 +93,37 @@ class question {
     get correct() {
         return this.correction();
     }
-    availablepoints(){
+    availablepoints() {
         var maxpoints = 0;
-        if(this.category == "math") {
-            for(let count = 0; count < this.specificquestion.length;count++){
-                maxpoints +=1;
-                if(this.correctanswers[count] == this.someanswers1[count]) {
+        if (this.category == "math") {
+            for (let count = 0; count < this.specificquestion.length; count++) {
+                maxpoints += 1;
+                if (this.correctanswers[count] == this.someanswers1[count]) {
                     maxpoints += 1;
                 }
-                if(this.correctanswers[count] == this.someanswers2[count]) {
+                if (this.correctanswers[count] == this.someanswers2[count]) {
                     maxpoints += 1;
                 }
-                if(this.correctanswers[count] == this.someanswer3[count]) {
+                if (this.correctanswers[count] == this.someanswer3[count]) {
                     maxpoints += 1;
                 }
             }
-            
+
         } else {
-            for(let count = 0; count < this.specificquestion.length;count++){
-                if (this.someanswer3[count] != "dunno" && catchanswer != null){
+            for (let count = 0; count < this.specificquestion.length; count++) {
+                if (this.someanswer3[count] != "dunno") {
                     maxpoints += 2;
                 } else {
                     maxpoints += 1;
                 }
 
             }
-           
+
         }
-        
+
         return maxpoints;
     }
-    get maxpoints(){
+    get maxpoints() {
         return this.availablepoints();
     }
 }
@@ -145,8 +140,9 @@ function addquestions() {
     let chooseamount = document.getElementById("amountofquestions");
     let chosenamount = chooseamount.options[chooseamount.selectedIndex].value;
     let category = document.querySelector('input[name="category"]:checked').value;
-    let questionstohtml = document.getElementById("thequestions");
+    let questionstohtml = document.getElementById("thequestions");   
     let username = document.getElementById("name").value;
+   
     if (!username == "") {
         let questions = [];
         let correctanswers = [];
@@ -172,7 +168,7 @@ function addquestions() {
                 let division = document.createElement("div");
                 let paragraph = document.createElement("p");
                 let choices = document.createElement("form");
-                
+
                 let specifichoice1 = document.createElement("input");
                 specifichoice1.setAttribute("type", "checkbox");
                 specifichoice1.setAttribute("name", "answer" + specificquestion);
@@ -217,7 +213,7 @@ function addquestions() {
 
                 division.id = "div" + specificquestion;
                 division.classList.add("hide");
-                
+
                 paragraph.innerHTML = questions[specificquestion];
                 paragraph.classList.add("aQuestion");
                 division.appendChild(paragraph);
@@ -228,7 +224,7 @@ function addquestions() {
         } else if (category == "general") {
             let questions = getJSON("https://www.mocky.io/v2/5d9389083000005b001b7580");
             let allquestions = [];
-            for(let add = 0; add < questions.length;add++){
+            for (let add = 0; add < questions.length; add++) {
                 allquestions[add] = questions[add];
             }
 
@@ -327,7 +323,7 @@ function addquestions() {
 
                 division.id = "div" + specificquestion;
                 division.classList.add("hide");
-                division.classList.add("checkchange");
+                
                 paragraph.innerHTML = questions[specificquestion];
                 paragraph.classList.add("aQuestion");
                 paragraph.id = "q" + specificquestion;
@@ -337,13 +333,12 @@ function addquestions() {
                 localStorage.setItem("questions", allquestions);
             }
         }
-        console.log(questions);
         
         document.getElementById("div0").classList.remove("hide");
         document.getElementById("settings").classList.add("hide");
-
+        document.getElementById("answeredamount").classList.remove("hide");
         document.getElementById("submit").disabled = false;
-
+        document.getElementById("quizNav").classList.remove("hide");
         if (chosenamount > 1) {
             document.getElementById("next").disabled = false;
         }
@@ -419,7 +414,7 @@ function submit() {
     let correctset = document.getElementsByClassName("correct");
     let someanswer3 = document.getElementsByClassName("someanswer3");
     let specificquestionhtml = document.getElementsByClassName("aQuestion");
-    
+
     document.getElementById("submit").disabled;
     document.getElementById("thequestions").classList.add("hide");
     document.getElementById("quizNav").classList.add("hide");
@@ -506,113 +501,116 @@ function submit() {
     let pointsearned = questioninfo.correct;
     let score = 0;
 
-    for(let add = 0; add < pointsearned.length-2;add++ ){
+    for (let add = 0; add < pointsearned.length - 2; add++) {
         score += Number(pointsearned[add]);
 
     }
 
-        let quizinfo = new quiz(
-            username, allquestions,
-            pointsearned[specificquestions.length], pointsearned[specificquestions.length+1]);
+    let quizinfo = new quiz(
+        username, allquestions,
+        pointsearned[specificquestions.length], pointsearned[specificquestions.length + 1]);
 
-        let tablebody = document.getElementById("tbody");
-        let tablefoot = document.getElementById("tfoot");
+    let tablebody = document.getElementById("tbody");
+    let tablefoot = document.getElementById("tfoot");
 
-        for (let info2table = 0; info2table < specificquestions.length; info2table++) {
-            let tablerow = document.createElement("tr");
-            let thequestion = document.createElement("td");
-            let thealternatives = document.createElement("td");
-            let theanswer = document.createElement("td");
-            let pointearned = document.createElement("td");
+    for (let info2table = 0; info2table < specificquestions.length; info2table++) {
+        let tablerow = document.createElement("tr");
+        let thequestion = document.createElement("td");
+        let thealternatives = document.createElement("td");
+        let theanswer = document.createElement("td");
+        let pointearned = document.createElement("td");
 
-            thequestion.textContent = questioninfo.specificquestion[info2table];
+        thequestion.textContent = questioninfo.specificquestion[info2table];
 
-            thealternatives.textContent = questioninfo.alloptions[info2table];
+        thealternatives.textContent = questioninfo.alloptions[info2table];
 
-            theanswer.textContent = questioninfo.useranswer[info2table];
+        theanswer.textContent = questioninfo.useranswer[info2table];
 
-            pointearned.textContent = pointsearned[info2table];
+        pointearned.textContent = pointsearned[info2table];
 
-            tablerow.appendChild(thequestion);
-            tablerow.appendChild(thealternatives);
-            tablerow.appendChild(theanswer);
-            tablerow.appendChild(pointearned);
+        tablerow.appendChild(thequestion);
+        tablerow.appendChild(thealternatives);
+        tablerow.appendChild(theanswer);
+        tablerow.appendChild(pointearned);
 
-            tablebody.appendChild(tablerow);
-        }
-        let tfootrow = document.createElement("tr");
-        let maxscore = document.createElement("td");
-        let correctguesses = document.createElement("td");
-        let incorrectguesses = document.createElement("td");
-        let userscore = document.createElement("td");
+        tablebody.appendChild(tablerow);
+    }
+    let tfootrow = document.createElement("tr");
+    let maxscore = document.createElement("td");
+    let correctguesses = document.createElement("td");
+    let incorrectguesses = document.createElement("td");
+    let userscore = document.createElement("td");
+    let maxpoints = questioninfo.maxpoints;
+    maxscore.textContent = "Current Max points: " + maxpoints;
+    correctguesses.textContent = "Correct guesses: " + quizinfo.correct;
+    incorrectguesses.textContent = "Incorrect guesses: " + quizinfo.incorrect;
+    userscore.textContent = "Score: " + score;
 
-        maxscore.textContent = "Current Max points: " + questioninfo.maxpoints;
-        correctguesses.textContent = "Correct guesses: " + quizinfo.correct;
-        incorrectguesses.textContent = "Incorrect guesses: " + quizinfo.incorrect;
-        userscore.textContent = "Score: " + score;
+    tfootrow.appendChild(maxscore);
+    tfootrow.appendChild(correctguesses);
+    tfootrow.appendChild(incorrectguesses);
+    tfootrow.appendChild(userscore);
+    tablefoot.appendChild(tfootrow);
 
-        tfootrow.appendChild(maxscore);
-        tfootrow.appendChild(correctguesses);
-        tfootrow.appendChild(incorrectguesses);
-        tfootrow.appendChild(userscore);
-        tablefoot.appendChild(tfootrow);
+    let list = document.getElementById("list");
+    let listitem1 = document.createElement("li");
+    let listitem2 = document.createElement("li");
+    let listitem3 = document.createElement("li");
+    let listitem4 = document.createElement("li");
+    let listitem5 = document.createElement("li");
+    let listitem6 = document.createElement("li");
+    let listitem7 = document.createElement("li");
 
-        let list = document.getElementById("list");
-        let listitem1 = document.createElement("li");
-        let listitem2 = document.createElement("li");
-        let listitem3 = document.createElement("li");
-        let listitem4 = document.createElement("li");
-        let listitem5 = document.createElement("li");
-        let listitem6 = document.createElement("li");
+    listitem1.textContent = quizinfo.name + " chose the category: " + questioninfo.category;
+    listitem2.textContent = "These questions are available: " + quizinfo.availablequestions;
+    listitem3.textContent = "Correct guesses give 1 point.";
+    listitem4.textContent = "Incorrect guesses give -1 point.";
+    listitem5.textContent = "Missed points give 0 points.";
+    listitem6.textContent = "Unanswered questions give -1 point.";
 
-        listitem1.textContent = quizinfo.name + " chose the category: " + questioninfo.category;
-        listitem2.textContent = "These questions are available: " + quizinfo.availablequestions;
-        listitem3.textContent = "Correct guesses give 1 point.";
-        listitem4.textContent = "Incorrent guesses and/or not answering give -1 point.";
-        listitem5.textContent = "Missed points give 0 points.";
-        
-        if(score < Math.round(Number(maxscore)*0.5)){
-            listitem6.textContent = "Test comment: You need more training.";
-        } else if(score < Math.round(Number(maxscore)*0.7)){
-            listitem6.textContent = "Test comment: You did well, I guess.";
-        } else if(score <  Math.round(Number(maxscore)*0.85)){
-            listitem6.textContent = "Test comment: You passed!.";
-        } else if(score> Math.round(Number(maxscore)*0.85)) {
-            listitem6.textContent = "Test comment: Well done!";
-        } else{
-            listitem6.textContent = "Test comment: Shit happens. Try getting a positive result.";
-        }
-
-        list.appendChild(listitem1);
-        list.appendChild(listitem2);
-        list.appendChild(listitem3);
-        list.appendChild(listitem4);
-        list.appendChild(listitem5);
-        list.appendChild(listitem6);
-
+    if (score < maxpoints* 0.5) {
+        listitem7.textContent = "Test comment: You need more training.";
+    } else if (score < maxpoints * 0.7) {
+        listitem7.textContent = "Test comment: You did well, I guess.";
+    } else if (score < maxpoints) {
+        listitem7.textContent = "Test comment: You passed!.";
+    } else if (score == maxpoints) {
+        listitem7.textContent = "Test comment: Well done!";
+    } else {
+        listitem7.textContent = "Test comment: Shit happens. Try getting a positive result.";
     }
 
-    function loadJSON(file, callback) {
+    list.appendChild(listitem1);
+    list.appendChild(listitem2);
+    list.appendChild(listitem3);
+    list.appendChild(listitem4);
+    list.appendChild(listitem5);
+    list.appendChild(listitem6);
+    list.appendChild(listitem7);
 
-        let xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-        xobj.open('GET', file, false);
-        xobj.onreadystatechange = function () {
-            if (xobj.readyState == 4 && xobj.status == "200") { //readystate 4 = done && status = done
+}
 
-                callback(xobj.responseText);
+function loadJSON(file, callback) {
 
-            }
+    let xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', file, false);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") { //readystate 4 = done && status = done
+
+            callback(xobj.responseText);
+
         }
-        xobj.send(null);
-
     }
+    xobj.send(null);
 
-    function getJSON(file) {
-        let result = null;
+}
 
-        loadJSON(file, function (response) {
-            result = JSON.parse(response);
-        });
-        return result;
-    }
+function getJSON(file) {
+    let result = null;
+
+    loadJSON(file, function (response) {
+        result = JSON.parse(response);
+    });
+    return result;
+}

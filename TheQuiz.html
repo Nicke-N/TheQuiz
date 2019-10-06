@@ -6,21 +6,21 @@
         <title>Some questions</title>
     </head>
     <body>
-        <div>
-            This quiz will give you 1 point for each correct answer and -1 for incorrect ones. There can be more than 1 correct answers!
-        </div>
+        
         <div id="settings">
-            <p>Enter your name: 
+            Enter your name: 
                 <input type="text" id="name">
-            </p>
-            <p>Choose category: 
+            
+            <div>Choose category: 
+                
                     <input type="radio" name="category" value="math"checked>
                     <label>Math</label>
             
                     <input type="radio" name="category" value="general">
-                    <label>General knowledge</label>
-            </p>
-            <label>How many questions would you like to answer?</label>
+                    <label>General</label>
+                
+            </div>
+            <p>How many questions would you like to answer?</p>
                 <select  id="amountofquestions" name="amountOfQuestions">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -34,14 +34,17 @@
             <button id="add" onclick="addquestions()">Add questions</button>
         </div>
         
-        <div id="quizNav">
+        <div id="gamecontent" >
+        <div id="thequestions"></div>
+        <div id="answeredamount" class="hide"></div>
+        
+        </div>
+        <div id="quizNav" class="hide">
             <button id="previous"value="0" onclick="previous()" disabled>Previous question</button>
             <button id="next"value="0" onclick="next()" disabled>Next question</button>
             <button id="submit" onclick="submit()" disabled>Submit answers</button>
         </div>
-        <div id="thequestions"></div>
         <div id="answerstotext"></div>
-        <div id="answeredamount"></div>
         <div id="results" class="hide">
             <div>
                 <table  >
@@ -66,6 +69,7 @@
 
                 </ul>
             </div>
+            <a href="javascript:location.reload(true)">Play Again!</a>
         </div> 
         <script src="vgfunction.js"></script>
     </body>
