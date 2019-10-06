@@ -6,7 +6,10 @@
         <title>Some questions</title>
     </head>
     <body>
-        <div id="topleft">
+        <div>
+            This quiz will give you 1 point for each correct answer and -1 for incorrect ones. There can be more than 1 correct answers!
+        </div>
+        <div id="settings">
             <p>Enter your name: 
                 <input type="text" id="name">
             </p>
@@ -15,33 +18,55 @@
                     <label>Math</label>
             
                     <input type="radio" name="category" value="general">
-                    <label>General</label>
+                    <label>General knowledge</label>
             </p>
-            <label for="questions">How many questions would you like to answer?</label>
+            <label>How many questions would you like to answer?</label>
                 <select  id="amountofquestions" name="amountOfQuestions">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-                <option value="5">1</option>
-                <option value="6">2</option>
-                <option value="7">3</option>
-                <option value="8">4</option>  
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>  
                 </select>
             <button id="add" onclick="addquestions()">Add questions</button>
         </div>
         
-        <div>
+        <div id="quizNav">
             <button id="previous"value="0" onclick="previous()" disabled>Previous question</button>
             <button id="next"value="0" onclick="next()" disabled>Next question</button>
-            <button id="submit" onclick="submit()">Submit answers</button>
+            <button id="submit" onclick="submit()" disabled>Submit answers</button>
         </div>
-        <div id="thequestions">
+        <div id="thequestions"></div>
+        <div id="answerstotext"></div>
+        <div id="answeredamount"></div>
+        <div id="results" class="hide">
+            <div>
+                <table  >
+                <thead>
+                    <tr>
+                        <td>Question</td>
+                        <td>All alternatives</td>
+                        <td>Chosen answer</td>
+                        <td>Points earned</td>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
 
+                </tbody>
+                <tfoot id="tfoot">
 
-        </div>
+                </tfoot>
+                </table>
+            </div>
+            <div>
+                <ul id="list">
 
-        
+                </ul>
+            </div>
+        </div> 
         <script src="vgfunction.js"></script>
     </body>
 </html>
