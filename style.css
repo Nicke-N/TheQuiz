@@ -2,25 +2,39 @@
     font-family: cursive;
 
 }
-.hide{
-    display:none;
-}
 ul{
     list-style-type: none;
 } 
+
 #settings{
+    position: fixed;
     border: 2px solid black;
-    width: 40%;
+    width: 30%;
     padding: 0.7em;
 }
 #gamecontent{
-    display: flex;
+    display: none;
+    position: fixed;
 }
 #thequestions{
     font-size: 150%;
-    
 }
 .aQuestion{
+
     font-size: 200%;
     color: lime;
+}
+
+#results{
+
+    display: none;
+    position: fixed;
+    top: 30px;
+}
+#answeredamount{
+    position: fixed;
+    left: 50%;
+}
+#name{
+    size: ;
 }

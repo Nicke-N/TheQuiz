@@ -1,12 +1,11 @@
 document.addEventListener("click", whichevent)
-
-
-function whichevent(event) {
+//Shows how many question are answered. Ps, I didn't use mediaqueries 
+//or anything else we learned in javascript 2 to make it "fair" for this completion.
+function whichevent(event) { 
 
     var selections = [];
     var uniquearray= [];
     var order = 0;
-    var questionsanswered = 0;
 
     let testing = document.querySelectorAll("input[type='checkbox']");
     let currently = document.getElementById("answeredamount");
@@ -19,7 +18,6 @@ function whichevent(event) {
     }
         if(event.target.value != null){
         uniquearray = Array.from(new Set(selections));
-        questionsanswered = uniquearray.length;
         currently.textContent = "You have answered " + uniquearray.length + " of " + chosenamount + " questions.";
         }
     
@@ -37,9 +35,8 @@ class question {
         this.alloptions = alloptions;
         this.useranswer = useranswer;
     }
-    correction() {
+    correction() {  // correction method of the quiz
         let corrected = [];
-        //this.correctanswers = correctanswers;
         for (let add = 0; add <= this.specificquestion.length + 1; add++) {
             corrected[add] = 0;
         }
@@ -93,7 +90,7 @@ class question {
     get correct() {
         return this.correction();
     }
-    availablepoints() {
+    availablepoints() { // Shows how many points is possible to get (different depending on category and amount of questions).
         var maxpoints = 0;
         if (this.category == "math") {
             for (let count = 0; count < this.specificquestion.length; count++) {
@@ -135,8 +132,9 @@ class quiz {
         this.incorrect = incorrect;
     }
 }
-
-function addquestions() {
+// Adds questions to the quiz and hides/shows different parts. I have to note that choosing Math as category will 
+// give 1 - 3 correct answers depending on the generated questions and the answers will still be corrected in a correct way!
+function addquestions() { 
     let chooseamount = document.getElementById("amountofquestions");
     let chosenamount = chooseamount.options[chooseamount.selectedIndex].value;
     let category = document.querySelector('input[name="category"]:checked').value;
@@ -212,7 +210,7 @@ function addquestions() {
                 choices.appendChild(label4);
 
                 division.id = "div" + specificquestion;
-                division.classList.add("hide");
+                division.style.display = "none";
 
                 paragraph.innerHTML = questions[specificquestion];
                 paragraph.classList.add("aQuestion");
@@ -322,7 +320,7 @@ function addquestions() {
                 choices.appendChild(label4);
 
                 division.id = "div" + specificquestion;
-                division.classList.add("hide");
+                division.style.display = "none";
                 
                 paragraph.innerHTML = questions[specificquestion];
                 paragraph.classList.add("aQuestion");
@@ -334,11 +332,11 @@ function addquestions() {
             }
         }
         
-        document.getElementById("div0").classList.remove("hide");
-        document.getElementById("settings").classList.add("hide");
-        document.getElementById("answeredamount").classList.remove("hide");
+        document.getElementById("div0").style.display = "block";
+        document.getElementById("settings").style.display = "none";
+        document.getElementById("gamecontent").style.display = "grid";
         document.getElementById("submit").disabled = false;
-        document.getElementById("quizNav").classList.remove("hide");
+
         if (chosenamount > 1) {
             document.getElementById("next").disabled = false;
         }
@@ -347,7 +345,7 @@ function addquestions() {
     }
 }
 
-function next() {
+function next() { // show next question and hide (former) current question.
     let pressedbutton = document.getElementById("next");
     let anotherbutton = document.getElementById("previous");
     let allquestions = document.getElementById("amountofquestions");
@@ -360,8 +358,8 @@ function next() {
         if (pressedbutton.value == change) {
 
             if (pressedbutton.value < chosenamount - 1) {
-                let displayclass = document.getElementById("div" + define).classList.remove("hide");
-                let hideclass = document.getElementById("div" + change).classList.add("hide");
+                let displayclass = document.getElementById("div" + define).style.display = "block";
+                let hideclass = document.getElementById("div" + change).style.display = "none";
                 anotherbutton.disabled = false;
             }
             pressedbutton.value = define;
@@ -375,7 +373,7 @@ function next() {
     }
 }
 
-function previous() {
+function previous() { // hides current question and shows the previous
     let pressedbutton = document.getElementById("previous");
     let anotherbutton = document.getElementById("next");
     let allquestions = document.getElementById("amountofquestions");
@@ -388,8 +386,8 @@ function previous() {
         if (pressedbutton.value == change) {
 
             if (pressedbutton.value >= 0) {
-                let displayclass = document.getElementById("div" + define).classList.remove("hide");
-                let hideclass = document.getElementById("div" + change).classList.add("hide");
+                let displayclass = document.getElementById("div" + define).style.display = "block";
+                let hideclass = document.getElementById("div" + change).style.display = "none";
                 anotherbutton.disabled = false;
             }
             pressedbutton.value = define;
@@ -404,7 +402,7 @@ function previous() {
     }
 }
 
-function submit() {
+function submit() { // calculates points and builds a table for result and a list for some comments about the users results.
     let amount = document.getElementById("amountofquestions");
     let chosenamount = amount.options[amount.selectedIndex].value;
     let username = document.getElementById("name").value;
@@ -416,9 +414,9 @@ function submit() {
     let specificquestionhtml = document.getElementsByClassName("aQuestion");
 
     document.getElementById("submit").disabled;
-    document.getElementById("thequestions").classList.add("hide");
-    document.getElementById("quizNav").classList.add("hide");
-    document.getElementById("results").classList.remove("hide");
+    document.getElementById("thequestions").style.display = "none";
+    document.getElementById("quizNav").style.display = "none";
+    document.getElementById("results").style.display = "block";
 
     let allquestions = localStorage.getItem("questions");
     let catchspecificquestion = Array.from(specificquestionhtml);
@@ -590,7 +588,7 @@ function submit() {
 
 }
 
-function loadJSON(file, callback) {
+function loadJSON(file, callback) { // I took this from you, I'll make my own later!
 
     let xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");

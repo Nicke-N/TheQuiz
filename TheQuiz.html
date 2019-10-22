@@ -6,48 +6,49 @@
         <title>Some questions</title>
     </head>
     <body>
-        
-        <div id="settings">
-            Enter your name: 
-                <input type="text" id="name">
-            
-            <div>Choose category: 
+            <div id="settings">
+                    Enter your name: 
+                        <input type="text" id="name">
+                    
+                    <div>Choose category: 
+                        
+                            <input type="radio" name="category" value="math"checked>
+                            <label>Math</label>
+                    
+                            <input type="radio" name="category" value="general">
+                            <label>General</label>
+                        
+                    </div>
+                    <p>How many questions would you like to answer?</p>
+                        <select  id="amountofquestions" name="amountOfQuestions">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>  
+                        </select>
+                    <button id="add" onclick="addquestions()">Add questions</button>
+                </div>
                 
-                    <input type="radio" name="category" value="math"checked>
-                    <label>Math</label>
-            
-                    <input type="radio" name="category" value="general">
-                    <label>General</label>
-                
-            </div>
-            <p>How many questions would you like to answer?</p>
-                <select  id="amountofquestions" name="amountOfQuestions">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>  
-                </select>
-            <button id="add" onclick="addquestions()">Add questions</button>
-        </div>
         
-        <div id="gamecontent" >
+        <div id="gamecontent">
         <div id="thequestions"></div>
-        <div id="answeredamount" class="hide"></div>
-        
-        </div>
-        <div id="quizNav" class="hide">
+        <div id="quizNav">
             <button id="previous"value="0" onclick="previous()" disabled>Previous question</button>
             <button id="next"value="0" onclick="next()" disabled>Next question</button>
             <button id="submit" onclick="submit()" disabled>Submit answers</button>
         </div>
-        <div id="answerstotext"></div>
-        <div id="results" class="hide">
+        
+        </div>
+        <div id="answeredamount" ></div> 
+
+        <div id="results">
             <div>
-                <table  >
+                
+                <table>
                 <thead>
                     <tr>
                         <td>Question</td>
@@ -68,9 +69,12 @@
                 <ul id="list">
 
                 </ul>
+
             </div>
+            
             <a href="javascript:location.reload(true)">Play Again!</a>
         </div> 
+               
         <script src="vgfunction.js"></script>
     </body>
 </html>
