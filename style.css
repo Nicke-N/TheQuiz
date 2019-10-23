@@ -8,6 +8,7 @@ ul{
 
 #settings{
     position: fixed;
+    top: 30px;
     border: 2px solid black;
     padding: 0.7em;
 }
@@ -32,5 +33,5 @@ ul{
 }
 #answeredamount{
     position: fixed;
-    left: 50%;
+    left: 20%;
 }
